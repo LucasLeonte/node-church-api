@@ -15,7 +15,7 @@ exports.seed = async function (knex) {
 
     const [userId] = await knex("users").insert({
         name: "Admin",
-        email: "admin@example.test",
+        email: "admin@example.com",
         password: passwordHash,
         is_admin: true,
         created_at: knex.fn.now(),
