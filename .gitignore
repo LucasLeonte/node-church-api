@@ -138,3 +138,6 @@ dist
 # Database
 Laravel migrations and seeders
 dev.sqlite3
+
+# Temporary
+test.js
