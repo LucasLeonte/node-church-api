@@ -2,11 +2,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 const env = require("../config/env");
+const HttpError = require("../errors/HttpError");
 
 async function register({ name, email, password }) {
     const exists = await User.query().findOne({ email });
-    if (exists)
-        throw Object.assign(new Error("Email already in use"), { status: 400 });
+    if (exists) throw HttpError.badRequest("Email already in use");
     const hash = await bcrypt.hash(password, env.SALT_ROUNDS);
     const user = await User.query().insert({ name, email, password: hash });
     const token = signToken(user);
@@ -15,11 +15,9 @@ async function register({ name, email, password }) {
 
 async function login({ email, password }) {
     const user = await User.query().findOne({ email });
-    if (!user)
-        throw Object.assign(new Error("Invalid credentials"), { status: 401 });
+    if (!user) throw HttpError.unauthorized("Invalid credentials");
     const ok = await bcrypt.compare(password, user.password);
-    if (!ok)
-        throw Object.assign(new Error("Invalid credentials"), { status: 401 });
+    if (!ok) throw HttpError.unauthorized("Invalid credentials");
     const token = signToken(user);
     return { user, token };
 }
