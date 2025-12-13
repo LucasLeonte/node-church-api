@@ -1,0 +1,20 @@
+{
+  "name": "church-api",
+  "version": "1.0.0",
+  "description": "Backend Node Project",
+  "homepage": "https://github.com/LucasLeonte/node-church-api#readme",
+  "bugs": {
+    "url": "https://github.com/LucasLeonte/node-church-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasLeonte/node-church-api.git"
+  },
+  "license": "ISC",
+  "author": "Lucas Leonte",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
