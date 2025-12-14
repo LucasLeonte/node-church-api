@@ -5,7 +5,8 @@ async function list(req, res, next) {
     try {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 20;
-        const data = await resourceService.list({ page, limit });
+        const q = req.query.q;
+        const data = await resourceService.list({ page, limit, q });
         res.json(data);
     } catch (err) {
         next(err);

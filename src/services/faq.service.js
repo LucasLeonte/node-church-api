@@ -1,11 +1,17 @@
 const Faq = require("../models/faq.model");
 const { knex } = require("../config/database");
 
-async function list({ page = 1, limit = 20 } = {}) {
-    return await Faq.query()
-        .withGraphFetched("category")
-        .orderBy("id", "desc")
-        .page(page - 1, limit);
+async function list({ page = 1, limit = 20, q } = {}) {
+    const qb = Faq.query().withGraphFetched("category").orderBy("id", "desc");
+    if (q && String(q).trim()) {
+        // Search in question and answer
+        const term = `%${String(q).toLowerCase()}%`;
+        qb.whereRaw("(LOWER(question) LIKE ? OR LOWER(answer) LIKE ?)", [
+            term,
+            term,
+        ]);
+    }
+    return await qb.page(page - 1, limit);
 }
 
 async function getById(id) {

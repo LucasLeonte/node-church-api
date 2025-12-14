@@ -1,10 +1,17 @@
 const Resource = require("../models/resource.model");
 const { knex } = require("../config/database");
 
-async function list({ page = 1, limit = 20 } = {}) {
-    const result = await Resource.query()
-        .withGraphFetched("categories")
-        .page(page - 1, limit);
+async function list({ page = 1, limit = 20, q } = {}) {
+    const qb = Resource.query().withGraphFetched("categories");
+    if (q && String(q).trim()) {
+        // Search in title, content, author
+        const term = `%${String(q).toLowerCase()}%`;
+        qb.whereRaw(
+            "(LOWER(title) LIKE ? OR LOWER(content) LIKE ? OR LOWER(author) LIKE ?)",
+            [term, term, term]
+        );
+    }
+    const result = await qb.page(page - 1, limit);
     return result;
 }
 
