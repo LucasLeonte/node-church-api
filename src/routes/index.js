@@ -40,4 +40,16 @@ router.use("/faq-categories", faqCategoryRoutes);
 const commentsRoutes = require("./comments");
 router.use("/comments", commentsRoutes);
 
+// Favorite verses
+const favoriteVersesRoutes = require("./favoriteVerses");
+router.use("/favorite-verses", favoriteVersesRoutes);
+
+// Friend requests
+const friendRequestsRoutes = require("./friendRequests");
+router.use("/friend-requests", friendRequestsRoutes);
+
+// Contact messages
+const contactMessagesRoutes = require("./contactMessages");
+router.use("/contact-messages", contactMessagesRoutes);
+
 module.exports = router;

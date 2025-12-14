@@ -137,6 +137,3 @@ dist
 
 # Database
 dev.sqlite3
-
-# Temporary
-test.js
