@@ -36,4 +36,8 @@ router.use("/faqs", faqRoutes);
 const faqCategoryRoutes = require("./faqCategories");
 router.use("/faq-categories", faqCategoryRoutes);
 
+// Comments
+const commentsRoutes = require("./comments");
+router.use("/comments", commentsRoutes);
+
 module.exports = router;
