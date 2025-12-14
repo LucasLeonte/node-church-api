@@ -12,6 +12,14 @@ router.use("/auth", authRoutes);
 const usersRoutes = require("./users");
 router.use("/users", usersRoutes);
 
+// News
+const newsRoutes = require("./news");
+router.use("/news", newsRoutes);
+
+// Programs
+const programsRoutes = require("./programs");
+router.use("/programs", programsRoutes);
+
 // Resources
 const resourcesRoutes = require("./resources");
 router.use("/resources", resourcesRoutes);
@@ -20,12 +28,12 @@ router.use("/resources", resourcesRoutes);
 const resourceCategoriesRoutes = require("./resourceCategories");
 router.use("/resource-categories", resourceCategoriesRoutes);
 
-// News
-const newsRoutes = require("./news");
-router.use("/news", newsRoutes);
+// FAQs
+const faqRoutes = require("./faqs");
+router.use("/faqs", faqRoutes);
 
-// Programs
-const programsRoutes = require("./programs");
-router.use("/programs", programsRoutes);
+// FAQ categories
+const faqCategoryRoutes = require("./faqCategories");
+router.use("/faq-categories", faqCategoryRoutes);
 
 module.exports = router;
