@@ -16,4 +16,12 @@ router.use("/users", usersRoutes);
 const resourcesRoutes = require("./resources");
 router.use("/resources", resourcesRoutes);
 
+// News
+const newsRoutes = require("./news");
+router.use("/news", newsRoutes);
+
+// Programs
+const programsRoutes = require("./programs");
+router.use("/programs", programsRoutes);
+
 module.exports = router;
