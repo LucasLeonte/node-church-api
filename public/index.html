@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>API Endpoints</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        max-width: 700px;
+        margin: 2rem auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>API Endpoints</h1>
+    <p>Deze pagina beschrijft de beschikbare API endpoints.</p>
+
+    <p>Opmerkingen:</p>
+    <ul>
+      <li>
+        Basis URL:
+        <strong>/api</strong>
+      </li>
+      <li>
+        Admin routes vereisen een geldige JWT met een gebruiker die
+        <em>is_admin</em> heeft.
+      </li>
+      <li>
+        Standaard admin aanwezig:
+        <ul>
+          <li>email: "admin@example.com"</li>
+          <li>password: "password123"</li>
+        </ul>
+      </li>
+      <li>
+        Sommige endpoints ondersteunen paginering via <strong>page</strong> en
+        <strong>limit</strong> query parameters.
+      </li>
+      <li>
+        Zoek functionaliteit via <strong>q</strong> query parameter voor lijsten
+        resources & faqs.
+      </li>
+      <li>Postman voorbeelden onderaan beschikbaar.</li>
+    </ul>
+
+    <hr />
+
+    <h2>Auth</h2>
+    <ul>
+      <li>
+        POST /api/auth/register — registreren (body: name, email, password)
+      </li>
+      <li>POST /api/auth/login — inloggen (body: email, password)</li>
+      <li>GET /api/auth/me — huidige gebruiker</li>
+    </ul>
+
+    <h2>Users</h2>
+    <ul>
+      <li>GET /api/users — lijst gebruikers</li>
+      <li>GET /api/users/:id — gebruiker</li>
+      <li>
+        PATCH /api/users/:id — update gebruiker (owner, admin can only toggle
+        is_admin)
+      </li>
+      <li>DELETE /api/users/:id — verwijder gebruiker (owner or admin)</li>
+    </ul>
+
+    <h2>News</h2>
+    <ul>
+      <li>GET /api/news — lijst nieuws</li>
+      <li>GET /api/news/:id — nieuwsartikel</li>
+      <li>POST /api/news — creëer nieuws (admin)</li>
+      <li>PATCH /api/news/:id — update nieuws (admin)</li>
+      <li>DELETE /api/news/:id — verwijder nieuws (admin)</li>
+    </ul>
+
+    <h2>Programs</h2>
+    <ul>
+      <li>GET /api/programs — lijst programma's</li>
+      <li>GET /api/programs/:id — programma</li>
+      <li>POST /api/programs — creëer programma (admin)</li>
+      <li>PATCH /api/programs/:id — update programma (admin)</li>
+      <li>DELETE /api/programs/:id — verwijder programma (admin)</li>
+    </ul>
+
+    <h2>Resources</h2>
+    <ul>
+      <li>GET /api/resources — lijst resources (opt param: q, page, limit)</li>
+      <li>GET /api/resources/:id — resource</li>
+      <li>POST /api/resources — creëer resource (admin)</li>
+      <li>PATCH /api/resources/:id — update resource (admin)</li>
+      <li>DELETE /api/resources/:id — verwijder resource (admin)</li>
+    </ul>
+
+    <h2>Resource Categories</h2>
+    <ul>
+      <li>GET /api/resource-categories</li>
+      <li>POST /api/resource-categories — creëer (admin)</li>
+      <li>PATCH /api/resource-categories/:id — update (admin)</li>
+      <li>DELETE /api/resource-categories/:id — verwijder (admin)</li>
+    </ul>
+
+    <h2>FAQs</h2>
+    <ul>
+      <li>GET /api/faqs — lijst (opt param: q, page, limit)</li>
+      <li>GET /api/faqs/:id — faq</li>
+      <li>POST /api/faqs — creëer (admin)</li>
+      <li>PATCH /api/faqs/:id — update (admin)</li>
+      <li>DELETE /api/faqs/:id — verwijder (admin)</li>
+    </ul>
+
+    <h2>FAQ Categories</h2>
+    <ul>
+      <li>GET /api/faq-categories</li>
+      <li>POST /api/faq-categories — creëer (admin)</li>
+      <li>PATCH /api/faq-categories/:id — update (admin)</li>
+      <li>DELETE /api/faq-categories/:id — verwijder (admin)</li>
+    </ul>
+
+    <h2>Comments</h2>
+    <ul>
+      <li>GET /api/comments — lijst</li>
+      <li>POST /api/comments — creëer (auth)</li>
+      <li>PATCH /api/comments/:id — update (owner or admin)</li>
+      <li>DELETE /api/comments/:id — verwijder (owner or admin)</li>
+    </ul>
+
+    <h2>Favorite Verses</h2>
+    <ul>
+      <li>GET /api/favorite-verses</li>
+      <li>POST /api/favorite-verses — toevoegen (auth)</li>
+      <li>DELETE /api/favorite-verses/:id — verwijder (owner or admin)</li>
+    </ul>
+
+    <h2>Friend Requests</h2>
+    <ul>
+      <li>GET /api/friend-requests (auth)</li>
+      <li>GET /api/friend-requests/:id — verzoek (auth)</li>
+      <li>POST /api/friend-requests — stuur verzoek (auth)</li>
+      <li>
+        PATCH /api/friend-requests/:id — update, valid: "pending", "accepted",
+        "rejected" (owner or admin)
+      </li>
+      <li>DELETE /api/friend-requests/:id — verwijder (owner or admin)</li>
+    </ul>
+
+    <h2>Contact Messages</h2>
+    <ul>
+      <li>POST /api/contact-messages — stuur bericht (public)</li>
+      <li>GET /api/contact-messages — lijst berichten (admin)</li>
+      <li>GET /api/contact-messages/:id — bericht (admin)</li>
+      <li>POST /api/contact-messages/:id/reply — beantwoord bericht (admin)</li>
+      <li>DELETE /api/contact-messages/:id — verwijder bericht (admin)</li>
+    </ul>
+
+    <h2>Health</h2>
+    <ul>
+      <li>GET /health — server status</li>
+    </ul>
+
+    <hr />
+
+    <h2>Voorbeelden (Postman)</h2>
+
+    <h3>Register</h3>
+    <ul>
+      <li><strong>Method</strong>: POST</li>
+      <li><strong>URL</strong>: http://localhost:3000/api/auth/register</li>
+      <li><strong>Headers</strong>: Content-Type: application/json</li>
+      <li>
+        <strong>Body (raw JSON)</strong>:
+        <pre>
+{
+  "name": "Test",
+  "email": "test@example.com",
+  "password": "password123"
+}</pre
+        >
+      </li>
+    </ul>
+
+    <h3>Login</h3>
+    <ul>
+      <li><strong>Method</strong>: POST</li>
+      <li><strong>URL</strong>: http://localhost:3000/api/auth/login</li>
+      <li><strong>Headers</strong>: Content-Type: application/json</li>
+      <li>
+        <strong>Body (raw JSON)</strong>:
+        <pre>
+{
+  "email": "test@example.com",
+  "password": "password123"
+}</pre
+        >
+      </li>
+    </ul>
+
+    <h3>Create News (admin)</h3>
+    <ul>
+      <li><strong>Method</strong>: POST</li>
+      <li><strong>URL</strong>: http://localhost:3000/api/news</li>
+      <li>
+        <strong>Headers</strong>:
+        <pre>
+Content-Type: application/json
+Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
+        >
+      </li>
+      <li>
+        <strong>Body (raw JSON)</strong>:
+        <pre>
+{
+  "title": "Titel",
+  "content": "Inhoud van het nieuws",
+  "image": "/path/to/image.jpg"
+}</pre
+        >
+      </li>
+    </ul>
+
+    <h3>Create Resource (admin)</h3>
+    <ul>
+      <li><strong>Method</strong>: POST</li>
+      <li><strong>URL</strong>: http://localhost:3000/api/resources</li>
+      <li>
+        <strong>Headers</strong>:
+        <pre>
+Content-Type: application/json
+Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
+        >
+      </li>
+      <li>
+        <strong>Body (raw JSON)</strong>:
+        <pre>
+{
+  "title": "Resource titel",
+  "author": "Johnson",
+  "content": "Beschrijving",
+  "link": "https://example.com",
+  "categories": [1, 2]
+}</pre
+        >
+      </li>
+    </ul>
+
+    <h3>Create Contact Message</h3>
+    <ul>
+      <li><strong>Method</strong>: POST</li>
+      <li><strong>URL</strong>: http://localhost:3000/api/contact-messages</li>
+      <li><strong>Headers</strong>: Content-Type: application/json</li>
+      <li>
+        <strong>Body (raw JSON)</strong>:
+        <pre>
+{
+  "name": "Naam",
+  "email": "user@example.com",
+  "message": "Hallo, vraag..."
+}</pre
+        >
+      </li>
+    </ul>
+  </body>
+</html>

@@ -26,7 +26,7 @@ function signToken(user) {
     const payload = {
         id: user.id,
         email: user.email,
-        is_admin: !!user.is_admin, // force convert to boolean
+        is_admin: !!user.is_admin, // convert to boolean
     };
     return jwt.sign(payload, env.JWT_SECRET, { expiresIn: "7d" });
 }

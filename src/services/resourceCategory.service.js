@@ -7,12 +7,6 @@ async function list({ page = 1, limit = 20 } = {}) {
         .page(page - 1, limit);
 }
 
-async function getById(id) {
-    return await ResourceCategory.query()
-        .findById(id)
-        .withGraphFetched("resources");
-}
-
 async function create(data) {
     return await knex.transaction(async (trx) => {
         const insert = Object.assign({}, data);
@@ -30,4 +24,4 @@ async function remove(id) {
     return { deleted: true };
 }
 
-module.exports = { list, getById, create, update, remove };
+module.exports = { list, create, update, remove };

@@ -6,9 +6,8 @@ const schema = require("../validators/faqCategory.schema");
 const auth = require("../middleware/auth.middleware");
 const admin = require("../middleware/admin.middleware");
 
-// Public list and get
+// Public list
 router.get("/", ctrl.list);
-router.get("/:id", ctrl.get);
 
 // Admin protected create/update/delete
 router.post("/", auth, admin, validation(schema.create), ctrl.create);

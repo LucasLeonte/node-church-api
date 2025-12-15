@@ -6,7 +6,6 @@ const schema = require("../validators/favoriteVerse.schema");
 const auth = require("../middleware/auth.middleware");
 
 router.get("/", ctrl.list);
-router.get("/:id", ctrl.get);
 router.post("/", auth, validation(schema.create), ctrl.create);
 router.delete("/:id", auth, ctrl.remove);
 

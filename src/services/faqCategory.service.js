@@ -7,10 +7,6 @@ async function list({ page = 1, limit = 20 } = {}) {
         .page(page - 1, limit);
 }
 
-async function getById(id) {
-    return await FaqCategory.query().findById(id).withGraphFetched("faqs");
-}
-
 async function create(data) {
     return await knex.transaction(async (trx) => {
         const row = await FaqCategory.query(trx).insert(
@@ -29,4 +25,4 @@ async function remove(id) {
     return { deleted: true };
 }
 
-module.exports = { list, getById, create, update, remove };
+module.exports = { list, create, update, remove };

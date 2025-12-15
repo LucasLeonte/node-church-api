@@ -19,7 +19,15 @@ async function login(req, res, next) {
     }
 }
 
+async function me(req, res, next) {
+    try {
+        res.json(req.user || null);
+    } catch (err) {
+        next(err);
+    }
+}
+
 register.createSchema = registerSchema;
 login.createSchema = loginSchema;
 
-module.exports = { register, login };
+module.exports = { register, login, me };

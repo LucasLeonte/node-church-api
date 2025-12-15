@@ -1,22 +1,42 @@
-async function me(req, res, next) {
-  try {
-    res.json(req.user);
-  } catch (err) {
-    next(err);
-  }
+const usersService = require("../services/users.service");
+
+async function list(req, res, next) {
+    try {
+        const users = await usersService.list();
+        res.json(users);
+    } catch (err) {
+        next(err);
+    }
 }
 
-async function updateMe(req, res, next) {
-  try {
-    const allowed = ['name', 'avatar', 'bio', 'birthdate'];
-    const patch = {};
-    for (const k of allowed) if (req.body[k] !== undefined) patch[k] = req.body[k];
-    const User = require('../models/user.model');
-    const updated = await User.query().patchAndFetchById(req.user.id, patch);
-    const u = updated.toJSON();
-    delete u.password;
-    res.json(u);
-  } catch (err) { next(err); }
+async function get(req, res, next) {
+    try {
+        const id = parseInt(req.params.id, 10);
+        const user = await usersService.getById(id);
+        res.json(user);
+    } catch (err) {
+        next(err);
+    }
 }
 
-module.exports = { me, updateMe };
+async function update(req, res, next) {
+    try {
+        const id = parseInt(req.params.id, 10);
+        const updated = await usersService.update(id, req.user, req.body);
+        res.json(updated);
+    } catch (err) {
+        next(err);
+    }
+}
+
+async function remove(req, res, next) {
+    try {
+        const id = parseInt(req.params.id, 10);
+        await usersService.remove(id, req.user);
+        res.status(204).send();
+    } catch (err) {
+        next(err);
+    }
+}
+
+module.exports = { list, get, update, remove };

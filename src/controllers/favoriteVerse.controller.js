@@ -15,17 +15,6 @@ async function list(req, res, next) {
     }
 }
 
-async function get(req, res, next) {
-    try {
-        const id = req.params.id;
-        const row = await service.getById(id);
-        if (!row) return next(HttpError.notFound("Favorite verse not found"));
-        res.json(row);
-    } catch (err) {
-        next(err);
-    }
-}
-
 async function create(req, res, next) {
     try {
         if (!req.user)
@@ -55,4 +44,4 @@ async function remove(req, res, next) {
     }
 }
 
-module.exports = { list, get, create, remove };
+module.exports = { list, create, remove };

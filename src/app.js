@@ -3,6 +3,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
+const path = require("path");
 // Initialize DB (bind Objection models to knex)
 require("./config/database");
 
@@ -35,6 +36,9 @@ app.get("/health", (req, res) => res.json({ status: "ok" }));
 
 // API routes (at ./routes)
 app.use("/api", routes);
+
+// API docs at project root (public/index.html)
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 // 404 fallback
 app.use((req, res, next) => {

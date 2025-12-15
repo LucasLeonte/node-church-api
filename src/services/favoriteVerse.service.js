@@ -7,10 +7,6 @@ async function list({ page = 1, limit = 20, user_id } = {}) {
     return await q.orderBy("id", "desc").page(page - 1, limit);
 }
 
-async function getById(id) {
-    return await FavoriteVerse.query().findById(id);
-}
-
 async function create(userId, data) {
     return await knex.transaction(async (trx) => {
         const insert = Object.assign({}, data, { user_id: userId });
@@ -24,4 +20,4 @@ async function remove(id) {
     return { deleted: true };
 }
 
-module.exports = { list, getById, create, remove };
+module.exports = { list, create, remove };
