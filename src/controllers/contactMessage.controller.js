@@ -3,8 +3,6 @@ const HttpError = require("../errors/HttpError");
 
 async function list(req, res, next) {
     try {
-        if (!req.user || !req.user.is_admin)
-            return next(HttpError.forbidden("Admin required"));
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 20;
         const data = await service.list({ page, limit });
@@ -16,8 +14,6 @@ async function list(req, res, next) {
 
 async function get(req, res, next) {
     try {
-        if (!req.user || !req.user.is_admin)
-            return next(HttpError.forbidden("Admin required"));
         const id = req.params.id;
         const row = await service.getById(id);
         if (!row) return next(HttpError.notFound("Contact message not found"));
@@ -38,8 +34,6 @@ async function create(req, res, next) {
 
 async function reply(req, res, next) {
     try {
-        if (!req.user || !req.user.is_admin)
-            return next(HttpError.forbidden("Admin required"));
         const id = req.params.id;
         const updated = await service.reply(id, req.body.reply_message);
         res.json(updated);
@@ -50,8 +44,6 @@ async function reply(req, res, next) {
 
 async function remove(req, res, next) {
     try {
-        if (!req.user || !req.user.is_admin)
-            return next(HttpError.forbidden("Admin required"));
         const id = req.params.id;
         await service.remove(id);
         res.status(204).send();

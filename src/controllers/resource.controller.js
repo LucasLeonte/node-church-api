@@ -26,8 +26,6 @@ async function get(req, res, next) {
 
 async function create(req, res, next) {
     try {
-        if (!req.user || !req.user.is_admin)
-            return next(HttpError.forbidden("Admin required"));
         const created = await resourceService.create(req.body);
         res.status(201).json(created);
     } catch (err) {
@@ -37,8 +35,6 @@ async function create(req, res, next) {
 
 async function update(req, res, next) {
     try {
-        if (!req.user || !req.user.is_admin)
-            return next(HttpError.forbidden("Admin required"));
         const id = req.params.id;
         const updated = await resourceService.update(id, req.body);
         res.json(updated);
@@ -49,8 +45,6 @@ async function update(req, res, next) {
 
 async function remove(req, res, next) {
     try {
-        if (!req.user || !req.user.is_admin)
-            return next(HttpError.forbidden("Admin required"));
         const id = req.params.id;
         await resourceService.remove(id);
         res.status(204).send();

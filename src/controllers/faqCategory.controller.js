@@ -25,8 +25,6 @@ async function get(req, res, next) {
 
 async function create(req, res, next) {
     try {
-        if (!req.user || !req.user.is_admin)
-            return next(HttpError.forbidden("Admin required"));
         const created = await service.create(req.body);
         res.status(201).json(created);
     } catch (err) {
@@ -36,8 +34,6 @@ async function create(req, res, next) {
 
 async function update(req, res, next) {
     try {
-        if (!req.user || !req.user.is_admin)
-            return next(HttpError.forbidden("Admin required"));
         const id = req.params.id;
         const updated = await service.update(id, req.body);
         if (!updated) return next(HttpError.notFound("FAQ category not found"));
@@ -49,8 +45,6 @@ async function update(req, res, next) {
 
 async function remove(req, res, next) {
     try {
-        if (!req.user || !req.user.is_admin)
-            return next(HttpError.forbidden("Admin required"));
         const id = req.params.id;
         await service.remove(id);
         res.status(204).send();
