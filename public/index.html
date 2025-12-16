@@ -203,6 +203,32 @@
       </li>
     </ul>
 
+    <h3>Create Program (admin)</h3>
+    <ul>
+      <li><strong>Method</strong>: POST</li>
+      <li><strong>URL</strong>: http://localhost:3000/api/programs</li>
+      <li>
+        <strong>Headers</strong>:
+        <pre>
+Content-Type: application/json
+Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
+        >
+      </li>
+      <li>
+        <strong>Body (raw JSON)</strong>:
+        <pre>
+{
+  "title": "Morning Prayer",
+  "description": "Weekly morning prayer session",
+  "day_of_week": "monday",
+  "start_time": "09:00",
+  "end_time": "10:00",
+  "published": true
+}</pre
+        >
+      </li>
+    </ul>
+
     <h3>Create News (admin)</h3>
     <ul>
       <li><strong>Method</strong>: POST</li>
@@ -222,6 +248,48 @@ Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
   "content": "Inhoud van het nieuws",
   "image": "/path/to/image.jpg"
 }</pre
+        >
+      </li>
+    </ul>
+
+    <h3>Create FAQ Category (admin)</h3>
+    <ul>
+      <li><strong>Method</strong>: POST</li>
+      <li><strong>URL</strong>: http://localhost:3000/api/faq-categories</li>
+      <li>
+        <strong>Headers</strong>: Content-Type: application/json
+        <pre>Authorization: Bearer &lt;ADMIN_JWT&gt;</pre>
+      </li>
+      <li>
+        <strong>Body (raw JSON)</strong>:
+        <pre>
+{
+  "name": "General",
+  "description": "Algemene vragen over de kerkactiviteiten"
+}
+</pre
+        >
+      </li>
+    </ul>
+
+    <h3>Create FAQ (admin)</h3>
+    <ul>
+      <li><strong>Method</strong>: POST</li>
+      <li><strong>URL</strong>: http://localhost:3000/api/faqs</li>
+      <li>
+        <strong>Headers</strong>: Content-Type: application/json
+        <pre>Authorization: Bearer &lt;ADMIN_JWT&gt;</pre>
+      </li>
+      <li>
+        <strong>Body (raw JSON)</strong>:
+        <pre>
+{
+  "question": "Hoe kan ik lid worden?",
+  "answer": "Neem contact op met het secretariaat of vul het registratieformulier in.",
+  "faq_category_id": 1,
+  "published": true
+}
+</pre
         >
       </li>
     </ul>
@@ -251,32 +319,6 @@ Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
       </li>
     </ul>
 
-    <h3>Create Program (admin)</h3>
-    <ul>
-      <li><strong>Method</strong>: POST</li>
-      <li><strong>URL</strong>: http://localhost:3000/api/programs</li>
-      <li>
-        <strong>Headers</strong>:
-        <pre>
-Content-Type: application/json
-Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
-        >
-      </li>
-      <li>
-        <strong>Body (raw JSON)</strong>:
-        <pre>
-{
-  "title": "Morning Prayer",
-  "description": "Weekly morning prayer session",
-  "day_of_week": "monday",
-  "start_time": "09:00",
-  "end_time": "10:00",
-  "published": true
-}</pre
-        >
-      </li>
-    </ul>
-
     <h3>Limit, Search, Sort</h3>
     <ul>
       <li>
@@ -291,7 +333,7 @@ Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
       </li>
     </ul>
 
-    <h3>Create Contact Message</h3>
+    <h3>Contact Messages</h3>
     <ul>
       <li><strong>Method</strong>: POST</li>
       <li><strong>URL</strong>: http://localhost:3000/api/contact-messages</li>
