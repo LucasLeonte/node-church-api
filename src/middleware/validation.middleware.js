@@ -6,6 +6,7 @@ module.exports = function validate(schema) {
         const { error, value } = schema.validate(req.body, {
             abortEarly: false,
             stripUnknown: true,
+            convert: false, // do not convert types
         });
         if (error)
             return res

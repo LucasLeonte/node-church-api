@@ -141,7 +141,7 @@
       <li>POST /api/friend-requests — stuur verzoek (auth)</li>
       <li>
         PATCH /api/friend-requests/:id — update, valid: "pending", "accepted",
-        "rejected" (owner or admin)
+        "rejected" (owner)
       </li>
       <li>DELETE /api/friend-requests/:id — verwijder (owner or admin)</li>
     </ul>
@@ -240,6 +240,32 @@ Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
   "content": "Beschrijving",
   "link": "https://example.com",
   "categories": [1, 2]
+}</pre
+        >
+      </li>
+    </ul>
+
+    <h3>Create Program (admin)</h3>
+    <ul>
+      <li><strong>Method</strong>: POST</li>
+      <li><strong>URL</strong>: http://localhost:3000/api/programs</li>
+      <li>
+        <strong>Headers</strong>:
+        <pre>
+Content-Type: application/json
+Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
+        >
+      </li>
+      <li>
+        <strong>Body (raw JSON)</strong>:
+        <pre>
+{
+  "title": "Morning Prayer",
+  "description": "Weekly morning prayer session",
+  "day_of_week": "monday",
+  "start_time": "09:00",
+  "end_time": "10:00",
+  "published": true
 }</pre
         >
       </li>
