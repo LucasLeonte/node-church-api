@@ -245,6 +245,17 @@ Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
       </li>
     </ul>
 
+    <h3>List & Search</h3>
+    <ul>
+      <li>
+        <strong>GET</strong> /api/resources?page=1&limit=2 — pagination & limit
+      </li>
+      <li>
+        <strong>GET</strong> /api/resources?q=devotional — search in
+        title/content/author
+      </li>
+    </ul>
+
     <h3>Create Contact Message</h3>
     <ul>
       <li><strong>Method</strong>: POST</li>
@@ -259,6 +270,69 @@ Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
   "message": "Hallo, vraag..."
 }</pre
         >
+      </li>
+      <li><strong>GET</strong> /api/contact-messages — list (admin)</li>
+      <li>
+        <strong>POST</strong> /api/contact-messages/1/reply — reply (admin)
+        <pre>{ "reply_message": "ok" }</pre>
+      </li>
+    </ul>
+
+    <h3>Update User (owner) vs Toggle Admin (admin)</h3>
+    <ul>
+      <li>
+        <strong>PATCH</strong> /api/users/2 — update profile fields as owner
+        <pre>
+{
+  "name": "New name",
+  "bio": "Short bio"
+}</pre
+        >
+      </li>
+      <li>
+        <strong>PATCH</strong> /api/users/2 — toggle admin (admin only)
+        <pre>{ "is_admin": true }</pre>
+      </li>
+    </ul>
+
+    <h3>Comments & Favorites (auth)</h3>
+    <ul>
+      <li>
+        <strong>POST</strong> /api/comments — add comment (auth)
+        <pre>
+{
+  "resource_id": 1,
+  "body": "Great resource!"
+}</pre
+        >
+      </li>
+      <li>
+        <strong>POST</strong> /api/favorite-verses — add favorite (auth)
+        <pre>
+{
+  "book": "John",
+  "chapter": 3,
+  "verse": 16
+}</pre
+        >
+      </li>
+    </ul>
+
+    <h3>Friend Requests</h3>
+    <ul>
+      <li>
+        <strong>POST</strong> /api/friend-requests — send request
+        <pre>
+{
+  "receiver_id": 1,
+  "message": "Will you connect?"
+}</pre
+        >
+      </li>
+      <li>
+        <strong>PATCH</strong> /api/friend-requests/1 — accept/reject (receiver
+        only)
+        <pre>{ "status": "accepted" }</pre>
       </li>
     </ul>
   </body>

@@ -48,13 +48,8 @@ async function update(req, res, next) {
         const existing = await service.getById(id);
         if (!existing)
             return next(HttpError.notFound("Friend request not found"));
-        // Only receiver or sender or admin can update (accept/reject)
-        if (
-            !req.user ||
-            (req.user.id !== existing.receiver_id &&
-                req.user.id !== existing.sender_id &&
-                !req.user.is_admin)
-        )
+        // Only receiver can update (accept/reject)
+        if (!req.user || req.user.id !== existing.receiver_id)
             return next(HttpError.forbidden("Not allowed"));
         const updated = await service.update(id, req.body);
         res.json(updated);
@@ -69,11 +64,11 @@ async function remove(req, res, next) {
         const existing = await service.getById(id);
         if (!existing)
             return next(HttpError.notFound("Friend request not found"));
+        // Only sender or receiver can cancel/delete
         if (
             !req.user ||
             (req.user.id !== existing.sender_id &&
-                req.user.id !== existing.receiver_id &&
-                !req.user.is_admin)
+                req.user.id !== existing.receiver_id)
         )
             return next(HttpError.forbidden("Not allowed"));
         await service.remove(id);
