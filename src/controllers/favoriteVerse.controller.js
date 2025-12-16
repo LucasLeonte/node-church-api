@@ -32,10 +32,7 @@ async function remove(req, res, next) {
         const existing = await service.getById(id);
         if (!existing)
             return next(HttpError.notFound("Favorite verse not found"));
-        if (
-            !req.user ||
-            (req.user.id !== existing.user_id && !req.user.is_admin)
-        )
+        if (!req.user || req.user.id !== existing.user_id)
             return next(HttpError.forbidden("Not allowed"));
         await service.remove(id);
         res.status(204).send();
