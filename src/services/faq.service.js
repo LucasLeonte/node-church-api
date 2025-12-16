@@ -11,7 +11,7 @@ async function list({ page = 1, limit = 20, q } = {}) {
             term,
         ]);
     }
-    return await qb.page(page - 1, limit);
+    return await qb.page(page - 1, limit); // limit & offset
 }
 
 async function getById(id) {

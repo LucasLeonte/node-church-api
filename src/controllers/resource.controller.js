@@ -6,7 +6,15 @@ async function list(req, res, next) {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 20;
         const q = req.query.q;
-        const data = await resourceService.list({ page, limit, q });
+        const sortBy = req.query.sortBy;
+        const sortDir = req.query.sortDir;
+        const data = await resourceService.list({
+            page,
+            limit,
+            q,
+            sortBy,
+            sortDir,
+        });
         res.json(data);
     } catch (err) {
         next(err);

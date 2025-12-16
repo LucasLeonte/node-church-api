@@ -35,12 +35,15 @@
         </ul>
       </li>
       <li>
-        Sommige endpoints ondersteunen paginering via <strong>page</strong> en
+        Resources en FAQs ondersteunen paginering via <strong>page</strong> en
         <strong>limit</strong> query parameters.
       </li>
       <li>
-        Zoek functionaliteit via <strong>q</strong> query parameter voor lijsten
-        resources & faqs.
+        Search via <strong>q</strong> parameter voor lijsten resources en FAQs.
+      </li>
+      <li>
+        Sorteer resources via <strong>sortBy</strong> (id, title, published_at,
+        author) en <strong>sortDir</strong> (asc, desc) parameters.
       </li>
       <li>Postman voorbeelden onderaan beschikbaar.</li>
     </ul>
@@ -87,7 +90,10 @@
 
     <h2>Resources</h2>
     <ul>
-      <li>GET /api/resources — lijst resources (opt param: q, page, limit)</li>
+      <li>
+        GET /api/resources — lijst resources (opt param: q, page, limit, sortBy,
+        sortDir)
+      </li>
       <li>GET /api/resources/:id — resource</li>
       <li>POST /api/resources — creëer resource (admin)</li>
       <li>PATCH /api/resources/:id — update resource (admin)</li>
@@ -271,7 +277,7 @@ Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
       </li>
     </ul>
 
-    <h3>List & Search</h3>
+    <h3>Limit, Search, Sort</h3>
     <ul>
       <li>
         <strong>GET</strong> /api/resources?page=1&limit=2 — pagination & limit
@@ -279,6 +285,9 @@ Authorization: Bearer &lt;ADMIN_JWT&gt;</pre
       <li>
         <strong>GET</strong> /api/resources?q=devotional — search in
         title/content/author
+      </li>
+      <li>
+        <strong>GET</strong> /api/resources?sortBy=title&sortDir=desc — sorteren
       </li>
     </ul>
 

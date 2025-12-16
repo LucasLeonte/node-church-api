@@ -1,7 +1,21 @@
 const Resource = require("../models/resource.model");
 const { knex } = require("../config/database");
 
-async function list({ page = 1, limit = 20, q } = {}) {
+async function list({
+    page = 1,
+    limit = 20,
+    q,
+    sortBy = "id",
+    sortDir = "asc",
+} = {}) {
+    const allowedSortFields = new Set([
+        "id",
+        "title",
+        "published_at",
+        "author",
+    ]);
+    const dir = String(sortDir || "").toLowerCase() === "desc" ? "desc" : "asc";
+
     const qb = Resource.query().withGraphFetched("categories");
     if (q && String(q).trim()) {
         // Search in title, content, author
@@ -11,8 +25,15 @@ async function list({ page = 1, limit = 20, q } = {}) {
             [term, term, term]
         );
     }
-    const result = await qb.page(page - 1, limit);
-    return result;
+
+    // Apply sorting (whitelist fields to avoid injection)
+    if (allowedSortFields.has(sortBy)) {
+        qb.orderBy(sortBy, dir);
+    } else {
+        qb.orderBy("id", "asc");
+    }
+
+    return await qb.page(page - 1, limit); // limit & offset
 }
 
 async function getById(id) {
