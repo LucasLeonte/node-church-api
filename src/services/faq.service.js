@@ -1,6 +1,7 @@
 const Faq = require("../models/faq.model");
 const { knex } = require("../config/database");
 const { ensureUnique } = require("./unique.helper");
+const HttpError = require("../errors/HttpError");
 
 async function list({ page = 1, limit = 20, q } = {}) {
     const qb = Faq.query().withGraphFetched("category").orderBy("id", "desc");
@@ -22,6 +23,17 @@ async function getById(id) {
 async function create(data) {
     return await knex.transaction(async (trx) => {
         await ensureUnique(Faq, "question", data.question, trx);
+        // If a faq_category_id is provided, ensure it exists
+        if (data.faq_category_id) {
+            const found = await knex("faq_categories")
+                .transacting(trx)
+                .where({ id: Number(data.faq_category_id) })
+                .first();
+            if (!found) {
+                throw HttpError.notFound("FAQ category not found");
+            }
+        }
+
         const row = await Faq.query(trx).insert(Object.assign({}, data));
         return await getById(row.id);
     });
@@ -30,6 +42,12 @@ async function create(data) {
 async function update(id, data) {
     if (data.question) {
         await ensureUnique(Faq, "question", data.question, null, id);
+    }
+    if (data.faq_category_id) {
+        const found = await knex("faq_categories")
+            .where({ id: Number(data.faq_category_id) })
+            .first();
+        if (!found) throw HttpError.notFound("FAQ category not found");
     }
     return await Faq.query().patchAndFetchById(id, data);
 }
