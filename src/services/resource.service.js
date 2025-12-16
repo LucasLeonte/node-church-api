@@ -1,5 +1,6 @@
 const Resource = require("../models/resource.model");
 const { knex } = require("../config/database");
+const { ensureUnique } = require("./unique.helper");
 
 async function list({
     page = 1,
@@ -46,6 +47,7 @@ async function getById(id) {
 async function create(data) {
     return await knex.transaction(async (trx) => {
         const resourceData = Object.assign({}, data);
+        await ensureUnique(Resource, "title", data.title, trx);
         if (!resourceData.published_at)
             resourceData.published_at = knex.fn.now();
         const inserted = await Resource.query(trx).insert(resourceData);
@@ -67,6 +69,9 @@ async function create(data) {
 async function update(id, data) {
     return await knex.transaction(async (trx) => {
         const patch = Object.assign({}, data);
+        if (patch.title) {
+            await ensureUnique(Resource, "title", patch.title, null, id);
+        }
         await Resource.query(trx).patchAndFetchById(id, patch);
         if (data.categories) {
             await knex("category_resource")

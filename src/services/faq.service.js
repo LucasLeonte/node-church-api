@@ -1,5 +1,6 @@
 const Faq = require("../models/faq.model");
 const { knex } = require("../config/database");
+const { ensureUnique } = require("./unique.helper");
 
 async function list({ page = 1, limit = 20, q } = {}) {
     const qb = Faq.query().withGraphFetched("category").orderBy("id", "desc");
@@ -20,12 +21,16 @@ async function getById(id) {
 
 async function create(data) {
     return await knex.transaction(async (trx) => {
+        await ensureUnique(Faq, "question", data.question, trx);
         const row = await Faq.query(trx).insert(Object.assign({}, data));
         return await getById(row.id);
     });
 }
 
 async function update(id, data) {
+    if (data.question) {
+        await ensureUnique(Faq, "question", data.question, null, id);
+    }
     return await Faq.query().patchAndFetchById(id, data);
 }
 
