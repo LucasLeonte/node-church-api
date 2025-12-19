@@ -11,11 +11,8 @@ const create = Joi.object({
     verse: Joi.number().integer().min(1).required(),
 });
 
-const update = Joi.object({
-    translation: Joi.string().optional().allow(null),
-    book: Joi.string().pattern(bookPattern).optional(),
-    chapter: Joi.number().integer().min(1).optional(),
-    verse: Joi.number().integer().min(1).optional(),
+const remove = Joi.object({
+    id: Joi.number().integer().min(1).required(),
 });
 
-module.exports = { create, update };
+module.exports = { create, delete: remove };

@@ -15,9 +15,13 @@ async function create(userId, data) {
     });
 }
 
+async function getById(id) {
+    return await FavoriteVerse.query().findById(id);
+}
+
 async function remove(id) {
     await FavoriteVerse.query().deleteById(id);
     return { deleted: true };
 }
 
-module.exports = { list, create, remove };
+module.exports = { list, create, getById, remove };

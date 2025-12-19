@@ -6,7 +6,7 @@ const create = Joi.object({
 });
 
 const update = Joi.object({
-    status: Joi.string().valid("pending", "accepted", "rejected").required(),
+    status: Joi.string().valid("accepted", "rejected").required(),
     message: Joi.string().optional().allow(null),
 });
 

@@ -1,4 +1,6 @@
 const FriendRequest = require("../models/friendRequest.model");
+const User = require("../models/user.model");
+const HttpError = require("../errors/HttpError");
 const { knex } = require("../config/database");
 
 async function list({ page = 1, limit = 20, userId } = {}) {
@@ -15,6 +17,10 @@ async function getById(id) {
 }
 
 async function create(senderId, data) {
+    // ensure receiver exists
+    const receiver = await User.query().findById(data.receiver_id);
+    if (!receiver) throw HttpError.notFound("Receiver not found");
+
     return await knex.transaction(async (trx) => {
         const insert = Object.assign({}, data, {
             sender_id: senderId,
